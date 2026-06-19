@@ -1,0 +1,58 @@
+name: Development Workflow
+
+on:
+  push:
+    branches-ignore:
+      - master
+      - main
+
+  workflow_dispatch:
+    inputs:
+      system:
+        description: 'System'
+        type: string
+        default: 'qt-1'
+      image-tag:
+        description: 'Image Tag (empty defaults to last commit)'
+        default: ''
+        type: string
+      # 1. Added a new boolean input checkbox
+      skip-build-and-diff:
+        description: 'Skip Build and Diff (Deploy Only)'
+        type: boolean
+        default: false
+
+jobs:
+  build:
+    name: Build
+    # 2. Skip this job if the checkbox is checked
+    if: ${{ inputs.skip-build-and-diff != true }}
+    uses: ./.github/workflows/build.yml
+    secrets: inherit
+    with:
+      environment: ${{ inputs.system == 'staging' && 'staging' || 'development' }}
+
+  deploy-diff:
+    name: Deploy Diff
+    # 3. Skip this job if the checkbox is checked
+    if: ${{ inputs.skip-build-and-diff != true }}
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: test
+      system: ${{ inputs.system || 'qt-1' }}
+      action: diff
+
+  deploy:
+    name: Deploy
+    # 4. CRITICAL: Changed 'needs' logic using 'always()' or 'anyStatusAnscestors' 
+    # Because by default, GitHub skips a job if its 'needs' dependencies are skipped.
+    needs: [build, deploy-diff]
+    if: |
+      always() && 
+      (needs.build.result == 'success' || needs.build.result == 'skipped') &&
+      (needs.deploy-diff.result == 'success' || needs.deploy-diff.result == 'skipped')
+    uses: ./.github/workflows/deploy.yml
+    with:
+      environment: test
+      system: ${{ inputs.system || 'qt-1' }}
+      action: deploy
