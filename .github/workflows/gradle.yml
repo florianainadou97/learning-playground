@@ -13,11 +13,11 @@ on:
   push:
     branches: [ "main" ]
   workflow_dispatch:
-  inputs:
-    info:
-      description: "⚠️ ATTENTION CONTRIBUTORS: This workflow compiles code and runs full validation. Ensure your tests pass locally before prompting a PR run."
-      required: false
-      default: "Proceeding with check..."
+    inputs:
+      info:
+        description: "⚠️ ATTENTION CONTRIBUTORS: This workflow compiles code and runs full validation. Ensure your tests pass locally before prompting a PR run."
+        required: false
+        default: "Proceeding with check..."
   pull_request:
     branches: [ "main" ]
 
