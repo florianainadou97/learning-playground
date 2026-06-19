@@ -1,3 +1,5 @@
+package playground.singleton;
+
 public class SingletonGoFThreadSafeRunner {
 
     public static void main(String[] args) {

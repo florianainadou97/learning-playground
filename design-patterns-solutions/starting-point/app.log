@@ -1,0 +1,4 @@
+[Mac.lan] [2026-06-05T15:49:43.347277] This is a singleton logger message.
+[Mac.lan] [2026-06-05T15:49:43.349535] Another message via singleton logger.
+[Mac.lan] [2026-06-05T17:43:57.031516] This is a singleton logger message.
+[Mac.lan] [2026-06-05T17:43:57.034233] Another message via singleton logger.

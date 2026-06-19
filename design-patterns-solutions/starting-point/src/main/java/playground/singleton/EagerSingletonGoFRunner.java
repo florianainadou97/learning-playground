@@ -1,3 +1,5 @@
+package playground.singleton;
+
 public class EagerSingletonGoFRunner {
 
     public static void main(String[] args) {
