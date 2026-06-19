@@ -15,9 +15,11 @@ on:
   workflow_dispatch:
     inputs:
       info:
-        description: "⚠️ ATTENTION CONTRIBUTORS: This workflow compiles code and runs full validation. Ensure your tests pass locally before prompting a PR run."
-        required: false
-        default: "Proceeding with check..."
+        acknowledge:
+        type: boolean
+        description: "⚠️ ATTENTION CONTRIBUTORS: This workflow compiles code and runs full validation. Ensure your tests pass locally before prompting a PR run. Check this box to confirm."
+        required: true
+        default: false
   pull_request:
     branches: [ "main" ]
 
