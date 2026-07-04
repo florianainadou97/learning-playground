@@ -1,0 +1,17 @@
+version: '3.8'
+
+services:
+  postgres-db:
+    image: postgres:16-alpine  # Uses a lightweight, secure official Postgres image
+    container_name: marketplace-postgres
+    environment:
+      POSTGRES_DB: marketplace-backend         # Automatically creates a database named 'mydb'
+      POSTGRES_USER: postgres   # Database admin username
+      POSTGRES_PASSWORD: postgres # Choose a secure password
+    ports:
+      - "5438:5438"             # Maps port 5432 inside the container to port 5432 on your machine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data # Prevents your data from erasing when the container stops
+
+volumes:
+  postgres_data:                # Named volume for persistent data storage

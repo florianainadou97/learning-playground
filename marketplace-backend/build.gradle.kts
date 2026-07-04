@@ -20,6 +20,9 @@ repositories {
 dependencies {
     // The Swiss Army knife for web backends (includes Tomcat, REST, Jackson JSON)
     implementation("org.springframework.boot:spring-boot-starter-web")
+    // Postgres & JPA Dependencies
+    implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+    runtimeOnly("org.postgresql:postgresql")
     // DevTools: automatically restarts the server when you change code
     "developmentOnly"("org.springframework.boot:spring-boot-devtools")
     // Testing framework
