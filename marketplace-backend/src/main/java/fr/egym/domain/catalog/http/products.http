@@ -6,7 +6,6 @@ POST http://localhost:8282/products
 Content-Type: application/json
 
 {
-  "id": "34087053-03c6-4efc-8dcc-4d130827b556",
   "name": "Product 1",
   "description": "Description of Product 1",
   "price": 19.99
