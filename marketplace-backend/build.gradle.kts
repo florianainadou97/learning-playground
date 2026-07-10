@@ -17,25 +17,31 @@ repositories {
     mavenCentral()
 }
 
+val lombokVersion = "1.18.32"
+
 dependencies {
     // The Swiss Army knife for web backends (includes Tomcat, REST, Jackson JSON)
     implementation("org.springframework.boot:spring-boot-starter-web")
+    // Spring Security Starter
+    implementation("org.springframework.boot:spring-boot-starter-security")
     // Postgres & JPA Dependencies
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
+
     runtimeOnly("org.postgresql:postgresql")
     // DevTools: automatically restarts the server when you change code
     "developmentOnly"("org.springframework.boot:spring-boot-devtools")
     // Testing framework
-    testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
-
+    testImplementation("org.springframework.boot:spring-boot-starter-test")// Spring Security Starter
     testImplementation(platform("org.junit:junit-bom:5.10.0"))
     testImplementation("org.junit.jupiter:junit-jupiter")
+
+
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 
     // Lombok configuration
-    compileOnly("org.projectlombok:lombok:1.18.32")
-    annotationProcessor("org.projectlombok:lombok:1.18.32")
+    compileOnly("org.projectlombok:lombok:$lombokVersion")
+    annotationProcessor("org.projectlombok:lombok:$lombokVersion")
 
     // Optional: If you use Lombok inside your test classes too
     testCompileOnly("org.projectlombok:lombok")
