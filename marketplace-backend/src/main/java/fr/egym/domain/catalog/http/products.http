@@ -1,8 +1,8 @@
 ### Get
-GET http://localhost:8282/products
+GET http://127.0.0.1:8282/products
 
 ### Create product
-POST http://localhost:8282/products
+POST http://127.0.0.1:8282/products
 Content-Type: application/json
 
 {

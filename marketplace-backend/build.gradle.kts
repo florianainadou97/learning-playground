@@ -22,8 +22,6 @@ val lombokVersion = "1.18.32"
 dependencies {
     // The Swiss Army knife for web backends (includes Tomcat, REST, Jackson JSON)
     implementation("org.springframework.boot:spring-boot-starter-web")
-    // Spring Security Starter
-    implementation("org.springframework.boot:spring-boot-starter-security")
     // Postgres & JPA Dependencies
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
 
