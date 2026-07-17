@@ -1,0 +1,9 @@
+backend:
+  port: 8282
+
+postgres:
+  image: postgres:15
+  username: postgres
+  password: postgres
+  dbName: marketplace-backend
+  port: 5432

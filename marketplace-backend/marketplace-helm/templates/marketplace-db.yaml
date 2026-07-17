@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: marketplace-db-deployment
+  namespace: marketplace
+  labels:
+    app: marketplace-db
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: marketplace-db
+  template:
+    metadata:
+      labels:
+        app: marketplace-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres:15
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: POSTGRES_PASSWORD
+              value: {{ .Values.postgres.password }}
+            - name: POSTGRES_USER
+              value: {{ .Values.postgres.username }}
+            - name: POSTGRES_DB
+              value: {{ .Values.postgres.dbName }}
+
+          ports:
+            - containerPort: {{ .Values.postgres.port }}
+          volumeMounts:
+            - name: init-scripts
+              mountPath: /docker-entrypoint-initdb.d
+      volumes:
+        - name: init-scripts
+          configMap:
+            name: postgres-init-script
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-init-script
+  namespace: marketplace
+data:
+  init.sql.sh: |
+    #!/bin/bash
+    # Check if database exists before creating
+    psql -U postgres -tc "SELECT 1 FROM pg_database WHERE datname = 'marketplace-backend'" | grep -q 1 || \
+    psql -U postgres -c "CREATE DATABASE \"marketplace-backend\";"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: marketplace-db-service  # ← Database service name
+  namespace: marketplace
+spec:
+  type: ClusterIP
+  selector:
+    app: marketplace-db
+  ports:
+    - port: {{ .Values.postgres.port }}
+      targetPort: {{ .Values.postgres.port }}
